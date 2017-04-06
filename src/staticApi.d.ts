@@ -1,13 +1,18 @@
 // UNDER DEVELOPMENT!
 
-/**
- * Type for dictionaries string:string
- */
-export interface StringDictionary { [index: string] : string }
+import { StringDictionary } from './base'
+
 /**
  * Type for dictionaries numeric:string
  */
 export interface NumericDictionary { [index: number] : string }
+
+export interface Currency{
+    readonly code: string
+    readonly name: string
+    readonly sign: string
+    readonly format: string
+}
 
 export interface Country {
     readonly code: string
@@ -17,30 +22,24 @@ export interface Country {
 
 /**
  * Provides static data like dictionaries
- * 
- * Remarks:
- * - all names/descriptions in the list are default in EN
- * - 
+ * All names/descriptions in the list are default in EN 
  */
 interface IPlayerStaticAPI{
 
-    /** Returns Languages list in format LanguageCode : Language */
-    GetLanguages() : StringDictionary
+    /** Returns Title list in format ID : Title */
+    GetTitles() : StringDictionary
 
-    /** Returns Currencies list in format CurrencyCode : Currency */
-    GetCurrencies() : StringDictionary
+    /** Returns Currencies list list */
+    GetCurrencies() : Currency[]
 
     /** Returns Countries list */
     GetCountries() : Country[]
     
+    /** Returns Languages list in format LanguageCode : Language */
+    GetLanguages() : StringDictionary
+
     /** Returns OddsStyles list in format ID : Description */
     GetOddsStyles() : NumericDictionary
-
-    /** Returns ResponsibleGamingPeriods list in format ID : Description */
-    GetResponsibleGamingPeriods() : NumericDictionary
-
-    /** Returns ResponsibleGamingAmounts list by Currency in format Amount : Description */
-    GetResponsibleGamingAmounts( currency : string ) : NumericDictionary
 
     /** Returns Departments list in format ID : Name */
     GetDepartments() : NumericDictionary
@@ -48,9 +47,6 @@ interface IPlayerStaticAPI{
     /** Returns ClosureReasons list in format ID : Name */
     GetClosureReason() : NumericDictionary
 
-    /** Returns RealityCheckIntervals list in format ID : Name */
-    GetRealityCheckIntervals() : NumericDictionary
-
 }
 
-export type PlayerStaticAPI = IPlayerStaticAPI;
+export type PlayerStaticAPI = IPlayerStaticAPI

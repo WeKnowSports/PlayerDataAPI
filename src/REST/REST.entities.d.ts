@@ -2,29 +2,29 @@
 // No Balances included for now !!!
 // No State included for now !!!
 
-import { StringDictionary } from './base'
-import { regulations } from './regulations'
+import { StringDictionary } from './REST.base';
+import { regulations } from './REST.regulations';
 
 export declare namespace entities {
 
-
     /**
      * Player data for registration
+     * path:    POST /players
      */
     export interface PlayerRegistration {
         brand: string
         // strange field!
         source: RegistrationSource
         // skin?
-
+        
         userName: string
-        password: string    
+        password: string
 
         details: PlayerPersonalInfo
         account: PlayerAccountSettings
         regulations?: regulations.PlayerRegulation[]
 
-        reffererCode: string
+        reffererCode?: string
         securityCode: string
     }
 
@@ -71,7 +71,7 @@ export declare namespace entities {
         currency: string
         /** OddsStyle id from OddsStyle List */
         oddsStyle: number
-    }    
+    }
 
     /**
      * Reset/Forgot password request
@@ -90,6 +90,11 @@ export declare namespace entities {
         newPassword: string
     }
 
+    /**
+     * Player information
+     * path:    GET /players/[id]
+     *          PUT /players/[id]
+     */
     export interface PlayerDetails{
         /** Unique Players reference in Brand scope _TD: Brand or Operator? */
         //readonly reference?: string
@@ -103,7 +108,7 @@ export declare namespace entities {
         regulations?: regulations.PlayerRegulation[]
 
         readonly state: PlayerState
-        
+
 /*
         isFirstLogin: boolean
         IsBonusRestricted: boolean
@@ -147,6 +152,10 @@ export declare namespace entities {
 
     /**
      * Message data with cropped body
+     * path:    GET /players/[id]/messages
+     *          GET /players/[id]/messages/[id]
+     *          DELETE /players/[id]/messages/[id]
+     * ?read    PATCH /players/[id]/messages/[id]
      */
     export interface InboxMessageData{
         readonly id: number
@@ -157,13 +166,12 @@ export declare namespace entities {
         readonly departmentId: number
         readonly isSent: boolean
         readonly isRead: boolean
-
-        /** ??? Cropped message body */
-        //readonly bodyCropped: string
+        readonly body?: string
     }
 
     /**
      * Message to be sent
+     * path:    POST /players/[id]/messages
      */
     export interface InboxMessage{
         name: string
@@ -173,5 +181,4 @@ export declare namespace entities {
         departmentId: number
         originalMessageId?: number
     }
-
 }

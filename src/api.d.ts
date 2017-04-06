@@ -1,6 +1,7 @@
 // UNDER DEVELOPMENT!
 
 import { entities } from './entities'
+import { regulations } from './regulations'
 
 /** Base for result of any void action */
 interface ActionResultBase { code: string; description: string; }
@@ -27,23 +28,21 @@ interface IPlayerAPI{
     ResetPassword( identityReset: entities.PlayerIdentityReset ): ActionResultBase
     ChangePassword( passwordChangeRequest: entities.PlayerPasswordChange ): ActionResultBase
     RefreshSession(): ActionResultBase
+    CloseAccount( closureRequest: entities.ClosureRequest ): ActionResultBase
 }
 
 /**
  * Regulations API
  */
 interface IRegulationsAPI{
-    SelfExcludePermanent(): ActionResultBase
-    SelfExcludeOnce( selfExclusion: entities.SelfExclusionOnce ): ActionResultBase
-    SelfExclude( selfExclusion: entities.SelfExclusion ): ActionResultBase
-    CloseAccount( closureRequest: entities.ClosureRequest ): ActionResultBase
-    SetRealityCheck( realityCheckRequest: entities.RealityCheckRequest ): ActionResultBase
+    GetRegulations() : regulations.RegulationConfig[]
+    ApplyRegulation( layerRegulation: regulations.PlayerRegulation ):ActionResultBase
 }
 
 /**
- * Messaging API
+ * Inbox Messaging API
  */
-interface IMessagingAPI{
+interface IInboxMessagingAPI{
     GetUnreadMessagesCount(): number
     GetInboxMessages() : entities.InboxMessageData
     GetSentMessages() : entities.InboxMessageData
@@ -54,4 +53,4 @@ interface IMessagingAPI{
 
 export type PlayerAPI = IPlayerAPI
 export type RegulationsAPI = IRegulationsAPI
-export type MessagingAPI = IMessagingAPI
+export type InboxMessagingAPI = IInboxMessagingAPI
